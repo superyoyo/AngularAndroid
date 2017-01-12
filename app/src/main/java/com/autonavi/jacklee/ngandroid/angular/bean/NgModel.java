@@ -28,4 +28,12 @@ public class NgModel extends EventSubject{
         notifyData(property, value);
         return this;
     }
+
+    //获取对应属性值
+    public Object getParam(String property){
+        if(params.containsKey(property)){
+            return params.get(property);
+        }
+        return null;
+    }
 }

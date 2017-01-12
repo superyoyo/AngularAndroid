@@ -58,4 +58,8 @@ public class NgGo {
             }
         }
     }
+
+    public void start(){
+        selectViewTag(parent);
+    }
 }

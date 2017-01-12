@@ -49,7 +49,9 @@ public class EventSubject implements ISubject{
             //获取对应的view
             View view = iObserver.getView();
             //对比view的tag是否和要改变的tag一致
-            if(tag.equals(view.getTag())){
+            String view_tag = view.getTag().toString();
+            String[] tags = view_tag.split(":");
+            if(tag.equals(tags[2])){
                 //通知这个viewObserver去做出相应的改变
                 iObserver.dataChange(this, value);
             }
