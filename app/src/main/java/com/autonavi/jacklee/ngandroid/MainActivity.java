@@ -9,15 +9,18 @@ import android.widget.LinearLayout;
 import com.autonavi.jacklee.ngandroid.angular.bean.NgGo;
 import com.autonavi.jacklee.ngandroid.angular.bean.NgModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private NgGo ngGo;
-    private NgUser ngUser;
+    private NgModel ngUser;
     private LinearLayout ll_container;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            ngUser.addParams("age", ((int)ngUser.getParam("age")) + 2 );
+            ngUser.addParams("age", ((int)ngUser.getValue("age")) + 2 );
             msg = Message.obtain();
             handler.sendMessageDelayed(msg, 1000);
         }
@@ -28,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ll_container = (LinearLayout) findViewById(R.id.ll_container);
+        ngGo = new NgGo(ll_container);
+
+        ngUser = new NgModel("user");
+
+        ngGo.addNgModel(ngUser);
+
+        ngGo.start();
 
     }
 
@@ -39,25 +49,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void initNgGo(){
 
-        ngGo = new NgGo(ll_container);
-
-        ngUser = new NgUser("user");
-
-        ngGo.addNgModel(ngUser);
-
-        ngGo.start();
-
         ngUser.addParams("name", "Jhon");
         ngUser.addParams("sex", "nan");
         ngUser.addParams("age", 14);
 
-        Message msg = Message.obtain();
-        handler.sendMessageDelayed(msg, 1000);
+        List<NgModel> list = new ArrayList<>();
+        for(int i = 0; i<3; i++){
+            if(i%3 == 0){
+                NgModel ngUser = new NgModel("student");
+                ngUser.addParams("name", "Jack" + i);
+                list.add(ngUser);
+            }else if(i%3 == 1){
+                NgModel ngUser = new NgModel("title");
+                ngUser.addParams("name", "title" + i);
+                list.add(ngUser);
+            }else{
+                NgModel ngUser = new NgModel("content");
+                ngUser.addParams("name", "Content" + i);
+                list.add(ngUser);
+            }
+        }
+
+        ngUser.addParams("list", list);
     }
 
-    private class NgUser extends NgModel{
-        public NgUser(String tag) {
-            super(tag);
-        }
-    }
+
 }

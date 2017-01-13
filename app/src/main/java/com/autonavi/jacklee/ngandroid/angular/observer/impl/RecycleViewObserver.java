@@ -3,6 +3,7 @@ package com.autonavi.jacklee.ngandroid.angular.observer.impl;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.autonavi.jacklee.ngandroid.angular.adapter.CommonAdapter;
 import com.autonavi.jacklee.ngandroid.angular.observer.ViewObserver;
 import com.autonavi.jacklee.ngandroid.subject.ISubject;
 
