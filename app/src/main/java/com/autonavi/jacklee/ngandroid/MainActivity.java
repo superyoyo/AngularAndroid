@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         ngUser.addParams("name", "Jhon");
         ngUser.addParams("sex", "nan");
         ngUser.addParams("age", 14);
+        ngUser.addParams("isMale", true);
 
         List<NgModel> list = new ArrayList<>();
         for(int i = 0; i<3; i++){

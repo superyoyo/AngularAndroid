@@ -1,17 +1,12 @@
 package com.autonavi.jacklee.ngandroid.angular.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.autonavi.jacklee.ngandroid.angular.bean.NgGo;
 import com.autonavi.jacklee.ngandroid.angular.bean.NgModel;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +28,7 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonHold
     public CommonAdapter.CommonHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //1.获取该位置的view
         View view = views.get(viewType);
+
         view.measure(0, 0);
         ViewGroup.LayoutParams lp = view.getLayoutParams();
         lp.height = view.getMeasuredHeight();

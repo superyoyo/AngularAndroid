@@ -9,27 +9,30 @@
     <LinearLayout
         android:id="@+id/ll_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Hello World!"-->
-            <!--android:tag="ng:user:name"/>-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Hello World!"-->
-            <!--android:tag="ng:user:sex"/>-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Hello World!"-->
-            <!--android:tag="ng:user:age"/>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            android:tag="ng:user:name"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            android:tag="ng:user:sex"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            android:tag="ng:user:age"
+            android:layout_margin="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:tag="nglist:user:list">
 
@@ -48,9 +51,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_margin="10dp"
                     android:tag="ng:student:name"
-                    android:textColor="#000"/>
+                    android:textColor="#000"
+                    android:text="Name"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -60,12 +65,16 @@
                 android:tag="ng:title">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:padding="10dp"
                     android:tag="ng:title:name"
-                    android:textColor="#000"/>
+                    android:text="A"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:background="#eaeaea"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -80,9 +89,17 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="10dp"
                     android:tag="ng:content:name"
-                    android:textColor="#000"/>
+                    android:textColor="#3291e4"
+                    android:text="Name"
+                    android:textStyle="bold"/>
             </RelativeLayout>
         </LinearLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CheckBox"
+            android:tag="ng:user:isMale"/>
     </LinearLayout>
 
     <TextView

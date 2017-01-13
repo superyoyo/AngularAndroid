@@ -57,7 +57,7 @@ public class NgGo {
 
                         //将之前的LinearLayout移除
                         viewGroup.removeView(item);
-                        viewGroup.addView(recyclerView);
+                        viewGroup.addView(recyclerView, i);
 
 
                         List<View> views = new ArrayList<>();
@@ -104,7 +104,9 @@ public class NgGo {
 
                         //recyclerView (根据view类型，创建不同的ViewObserver)
                         ViewObserver viewObserver = ViewObseverFactory.createViewObserver(recyclerView);
-                        subject.registe(viewObserver);
+                        if(viewObserver != null){
+                            subject.registe(viewObserver);
+                        }
                     }
                 }else {
                     Log.d("liuji", "Not_LinearLayout-->");
@@ -132,7 +134,9 @@ public class NgGo {
 
                 //将该view和该对象关联起来 (根据view类型，创建不同的ViewObserver)
                 ViewObserver viewObserver = ViewObseverFactory.createViewObserver(view);
-                subject.registe(viewObserver);
+                if(viewObserver != null){
+                    subject.registe(viewObserver);
+                }
             }
         }
 
