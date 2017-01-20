@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <declare-styleable name="ng">
+        <attr name="ngRecyclerViewItemList" format="reference"/>
+    </declare-styleable>
+
 </resources>

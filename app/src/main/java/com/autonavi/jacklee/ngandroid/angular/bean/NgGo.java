@@ -1,9 +1,11 @@
 package com.autonavi.jacklee.ngandroid.angular.bean;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import com.autonavi.jacklee.ngandroid.angular.adapter.CommonAdapter;
 import com.autonavi.jacklee.ngandroid.angular.observer.ViewObserver;
 import com.autonavi.jacklee.ngandroid.angular.observer.ViewObseverFactory;
+import com.autonavi.jacklee.ngandroid.angular.view.NgItemView;
 import com.autonavi.jacklee.ngandroid.subject.EventSubject;
 
 import java.util.ArrayList;
@@ -26,10 +29,12 @@ public class NgGo {
     private HashMap<String, EventSubject> subjects;
     //当前nggo作用的域
     private View parent;
+    private LayoutInflater inflater;
 
     public NgGo(View parent) {
         this.parent = parent;
         subjects = new HashMap<>();
+        inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     //添加ngModel
@@ -60,11 +65,14 @@ public class NgGo {
                         viewGroup.addView(recyclerView, i);
 
 
-                        List<View> views = new ArrayList<>();
+                        List<NgItemView> views = new ArrayList<>();
                         //3.实例化该viewgroup的所有item
                         for(int j = 0, m = ((ViewGroup) item).getChildCount(); j < m; j++){
                             View item_view = ((ViewGroup) item).getChildAt(j);
-                            views.add(item_view);
+                            if(item_view instanceof NgItemView){
+                                views.add((NgItemView)item_view);
+                            }
+
                             //将该子view从父view中移除，不然，在CommonAdapter中把该子view当item时会报该子view有多个父view
                             ((ViewGroup) item).removeView(item_view);
                             //移除
@@ -91,7 +99,7 @@ public class NgGo {
                             //不能调用ngModel.addParams(),因为此方法会掉起UI操作，此时UI还未渲染完成
                             ngModel.getParams().put(model_property, list);
                         }
-                        CommonAdapter adapter = new CommonAdapter(views, list);
+                        CommonAdapter adapter = new CommonAdapter(views, list, inflater);
 
                         //根据LinearLayout的Orientation属性，设置recyclerview的方向
                         if(((LinearLayout)item).getOrientation() == LinearLayout.HORIZONTAL){

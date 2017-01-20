@@ -1,11 +1,13 @@
 package com.autonavi.jacklee.ngandroid.angular.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.autonavi.jacklee.ngandroid.angular.bean.NgGo;
 import com.autonavi.jacklee.ngandroid.angular.bean.NgModel;
+import com.autonavi.jacklee.ngandroid.angular.view.NgItemView;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,22 +19,20 @@ import java.util.List;
 
 public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonHolder> {
     private List<NgModel> list;
-    private List<View> views;
+    private List<NgItemView> views;
+    private LayoutInflater inflater;
 
-    public CommonAdapter(List<View> views, List<NgModel> list) {
+    public CommonAdapter(List<NgItemView> views, List<NgModel> list, LayoutInflater inflater) {
         this.views = views;
         this.list = list;
+        this.inflater = inflater;
     }
 
     @Override
     public CommonAdapter.CommonHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //1.获取该位置的view
-        View view = views.get(viewType);
-
-        view.measure(0, 0);
-        ViewGroup.LayoutParams lp = view.getLayoutParams();
-        lp.height = view.getMeasuredHeight();
-        view.setLayoutParams(lp);
+        int laytoutId = views.get(viewType).getLaytoutId();
+        View view = inflater.inflate(laytoutId, parent, false);
         return new CommonHolder(view);
     }
 
