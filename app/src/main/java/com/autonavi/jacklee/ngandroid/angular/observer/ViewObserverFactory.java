@@ -30,7 +30,7 @@ import com.autonavi.jacklee.ngandroid.angular.observer.impl.TextViewObserver;
  * Created by jacklee on 17/1/12.
  */
 
-public class ViewObseverFactory {
+public class ViewObserverFactory {
     public static ViewObserver createViewObserver(View view, NgModel ngModel){
         ViewObserver viewObserver = null;
         if(view instanceof TextView){

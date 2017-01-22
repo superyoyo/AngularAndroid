@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 
 import com.autonavi.jacklee.ngandroid.angular.adapter.CommonAdapter;
 import com.autonavi.jacklee.ngandroid.angular.observer.ViewObserver;
-import com.autonavi.jacklee.ngandroid.angular.observer.ViewObseverFactory;
+import com.autonavi.jacklee.ngandroid.angular.observer.ViewObserverFactory;
 import com.autonavi.jacklee.ngandroid.angular.view.NgItemView;
 import com.autonavi.jacklee.ngandroid.subject.EventSubject;
 
@@ -113,7 +113,7 @@ public class NgGo {
                         recyclerView.setAdapter(adapter);
 
                         //recyclerView (根据view类型，创建不同的ViewObserver)
-                        ViewObserver viewObserver = ViewObseverFactory.createViewObserver(recyclerView, (NgModel) subject);
+                        ViewObserver viewObserver = ViewObserverFactory.createViewObserver(recyclerView, (NgModel) subject);
                         if(viewObserver != null){
                             subject.registe(viewObserver);
                         }
@@ -145,7 +145,7 @@ public class NgGo {
                 EventSubject subject = subjects.get(model_tag);
 
                 //将该view和该对象关联起来 (根据view类型，创建不同的ViewObserver)
-                ViewObserver viewObserver = ViewObseverFactory.createViewObserver(view, (NgModel)subject);
+                ViewObserver viewObserver = ViewObserverFactory.createViewObserver(view, (NgModel)subject);
                 if(viewObserver != null){
                     subject.registe(viewObserver);
                 }
