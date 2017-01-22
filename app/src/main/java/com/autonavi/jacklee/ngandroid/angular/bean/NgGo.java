@@ -51,10 +51,12 @@ public class NgGo {
                 //判断是否是RecycleView
                 if(item instanceof LinearLayout){
                     Log.d("liuji", "LinearLayout-->");
-                    //1.获取view 的tag值，用来找出对应那个model的那个属性
-                    String tag = item.getTag().toString();
                     //2.判断tag是否为空，如果不为空，看开头是否是"nglist:"开头
-                    if (!TextUtils.isEmpty(tag) && tag.startsWith("nglist:")) {
+                    if (item.getTag() != null && !TextUtils.isEmpty(item.getTag().toString()) && item.getTag().toString().startsWith("nglist:")) {
+
+                        //1.获取view 的tag值，用来找出对应那个model的那个属性
+                        String tag = item.getTag().toString();
+
                         RecyclerView recyclerView = new RecyclerView(view.getContext());
                         recyclerView.setLayoutParams(item.getLayoutParams());
                         //为recyclerView设置tag，否则ngModel在值发生改变时，通过tag遍历ViewObserver的时候，会发生view没有tag的空指针异常
@@ -111,10 +113,12 @@ public class NgGo {
                         recyclerView.setAdapter(adapter);
 
                         //recyclerView (根据view类型，创建不同的ViewObserver)
-                        ViewObserver viewObserver = ViewObseverFactory.createViewObserver(recyclerView);
+                        ViewObserver viewObserver = ViewObseverFactory.createViewObserver(recyclerView, (NgModel) subject);
                         if(viewObserver != null){
                             subject.registe(viewObserver);
                         }
+                    }else{
+                        selectViewTag(item);
                     }
                 }else {
                     Log.d("liuji", "Not_LinearLayout-->");
@@ -141,7 +145,7 @@ public class NgGo {
                 EventSubject subject = subjects.get(model_tag);
 
                 //将该view和该对象关联起来 (根据view类型，创建不同的ViewObserver)
-                ViewObserver viewObserver = ViewObseverFactory.createViewObserver(view);
+                ViewObserver viewObserver = ViewObseverFactory.createViewObserver(view, (NgModel)subject);
                 if(viewObserver != null){
                     subject.registe(viewObserver);
                 }

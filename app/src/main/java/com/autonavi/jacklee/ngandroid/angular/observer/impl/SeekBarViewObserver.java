@@ -2,22 +2,22 @@ package com.autonavi.jacklee.ngandroid.angular.observer.impl;
 
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 
 import com.autonavi.jacklee.ngandroid.angular.bean.NgModel;
 import com.autonavi.jacklee.ngandroid.angular.observer.ViewObserver;
 import com.autonavi.jacklee.ngandroid.subject.ISubject;
 
 /**
- * Created by jacklee on 17/1/12.
+ * Created by jacklee on 17/1/22.
  */
 
-public class CheckBoxViewObserver extends ViewObserver {
+public class SeekBarViewObserver extends ViewObserver {
     private boolean not_change;
-    public CheckBoxViewObserver(View view, final NgModel ngModel) {
+    public SeekBarViewObserver(View view, final NgModel ngModel) {
         super(view);
-        CheckBox checkBox = (CheckBox)view;
+        SeekBar sb = (SeekBar)view;
         String tag = view.getTag().toString();
         //1.判断tag是否为空，如果不为空，看开头是否是"ng:"开头
         if (!TextUtils.isEmpty(tag) && tag.startsWith("ng:")) {
@@ -27,15 +27,23 @@ public class CheckBoxViewObserver extends ViewObserver {
             String model_tag = tags[1];
             //对象属性
             final String model_property = tags[2];
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     not_change = true;
-                    if(ngModel.getValue(model_property) instanceof Boolean){
-                        ngModel.addParams(model_property, isChecked);
-                    }else{
-                        ngModel.addParams(model_property, isChecked ? 0 : 1);
+                    if(ngModel.getValue(model_property) instanceof Integer){
+                        ngModel.addParams(model_property, progress);
                     }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
                 }
             });
         }
@@ -47,13 +55,9 @@ public class CheckBoxViewObserver extends ViewObserver {
             not_change = false;
             return;
         }
-        CheckBox cb = (CheckBox)getView();
-        if(object instanceof Boolean){
-            boolean flag = (Boolean)object;
-            cb.setChecked(flag);
-        }else if(object instanceof Integer){
-            int flag = (int)object;
-            cb.setChecked(flag == 0);
+        SeekBar sb = (SeekBar)getView();
+        if(object instanceof Integer){
+            sb.setProgress((Integer)object);
         }
     }
 }
