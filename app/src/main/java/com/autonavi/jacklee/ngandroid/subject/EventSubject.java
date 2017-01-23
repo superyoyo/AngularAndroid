@@ -44,6 +44,11 @@ public class EventSubject implements ISubject{
     }
 
     @Override
+    public void removeAll() {
+        observers.clear();
+    }
+
+    @Override
     public void notifyData(String tag, Object value) {
         for(ViewObserver iObserver : observers){
             //获取对应的view

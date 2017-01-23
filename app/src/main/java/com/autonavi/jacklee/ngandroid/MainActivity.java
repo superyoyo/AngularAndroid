@@ -15,14 +15,21 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private NgGo ngGo;
     private NgModel ngUser;
+    private List<NgModel> list;
     private LinearLayout ll_container;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            ngUser.addParams("age", ((int)ngUser.getValue("age")) + 2 );
-            msg = Message.obtain();
-            handler.sendMessageDelayed(msg, 1000);
+
+            if((int)ngUser.getValue("age") >= 100){
+                ngUser.addParams("age", 0 );
+            }else{
+                ngUser.addParams("age", ((int)ngUser.getValue("age")) + 2 );
+            }
+
+            NgModel user = ((List<NgModel>)ngUser.getValue("list")).get(0);
+            user.addParams("name", "Jack" + ((int)ngUser.getValue("age")));
         }
     };
 
@@ -54,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         ngUser.addParams("age", 14);
         ngUser.addParams("isMale", false);
 
-        List<NgModel> list = new ArrayList<>();
-        for(int i = 0; i<13; i++){
+        list = new ArrayList<>();
+        for(int i = 0; i<10; i++){
             if(i%3 == 0){
                 NgModel ngUser = new NgModel("student");
                 ngUser.addParams("name", "Jack" + i);
@@ -72,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ngUser.addParams("list", list);
+
+        Message msg = Message.obtain();
+        handler.sendMessageDelayed(msg, 1000);
     }
 
 

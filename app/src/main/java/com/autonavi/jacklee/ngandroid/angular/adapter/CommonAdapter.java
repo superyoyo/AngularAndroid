@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.autonavi.jacklee.ngandroid.angular.bean.NgGo;
 import com.autonavi.jacklee.ngandroid.angular.bean.NgModel;
 import com.autonavi.jacklee.ngandroid.angular.view.NgItemView;
+import com.autonavi.jacklee.ngandroid.subject.EventSubject;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -76,6 +77,14 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonHold
         }
 
         public void setData(NgModel ngModel){
+
+
+            if(itemView.getTag() != null && itemView.getTag() instanceof EventSubject){
+
+                EventSubject subject = (EventSubject)itemView.getTag();
+                subject.removeAll();
+                itemView.setTag(null);
+            }
             NgGo ngg = new NgGo(itemView);
             ngg.addNgModel(ngModel);
             ngg.start();
@@ -90,6 +99,7 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonHold
                 Object value = ngModel.getValue(property);
                 ngModel.addParams(property, value);
             }
+            itemView.setTag(ngModel);
         }
     }
 }
