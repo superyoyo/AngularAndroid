@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import java.util.List;
 public class NgGo {
     //每个主题都有其订阅者，即ngModel
     private HashMap<String, EventSubject> subjects;
+    private SparseArray<CommonAdapter> adapters;
     //当前nggo作用的域
     private View parent;
     private LayoutInflater inflater;
@@ -102,6 +104,15 @@ public class NgGo {
                             ngModel.getParams().put(model_property, list);
                         }
                         CommonAdapter adapter = new CommonAdapter(views, list, inflater);
+                        if(adapters == null){
+                            adapters = new SparseArray<>();
+                        }
+
+                        if(item.getId() > 0){
+                            adapter.setRv_id(item.getId());
+                            adapters.put(item.getId(), adapter);
+                            recyclerView.setId(item.getId());
+                        }
 
                         //根据LinearLayout的Orientation属性，设置recyclerview的方向
                         if(((LinearLayout)item).getOrientation() == LinearLayout.HORIZONTAL){
@@ -156,5 +167,9 @@ public class NgGo {
 
     public void start(){
         selectViewTag(parent);
+    }
+
+    public CommonAdapter getRecyclerAdapter(int id){
+        return adapters.get(id);
     }
 }

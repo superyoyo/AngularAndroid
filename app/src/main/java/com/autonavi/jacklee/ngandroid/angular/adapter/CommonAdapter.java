@@ -1,6 +1,7 @@
 package com.autonavi.jacklee.ngandroid.angular.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,21 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonHold
     private List<NgModel> list;
     private List<NgItemView> views;
     private LayoutInflater inflater;
+    private CommonAdapterInterface commonAdapterInterface;
+    private int rv_id;//当前RecyclerView的ID
 
     public CommonAdapter(List<NgItemView> views, List<NgModel> list, LayoutInflater inflater) {
         this.views = views;
         this.list = list;
         this.inflater = inflater;
+    }
+
+    public void setCommonAdapterInterface(CommonAdapterInterface commonAdapterInterface) {
+        this.commonAdapterInterface = commonAdapterInterface;
+    }
+
+    public void setRv_id(int rv_id) {
+        this.rv_id = rv_id;
     }
 
     @Override
@@ -43,6 +54,9 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonHold
         NgModel ngModel = list.get(position);
         //2.为该holder设置数据，进行渲染
         holder.setData(ngModel);
+        if(commonAdapterInterface != null){
+            commonAdapterInterface.handleItem(rv_id, holder, position);
+        }
     }
 
     @Override
@@ -70,10 +84,11 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonHold
     }
 
     public class CommonHolder extends RecyclerView.ViewHolder{
+        private SparseArray<View> views;
 
         public CommonHolder(View itemView) {
             super(itemView);
-
+            views = new SparseArray<View>();
         }
 
         public void setData(NgModel ngModel){
@@ -101,5 +116,22 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonHold
             }
             itemView.setTag(ngModel);
         }
+
+        public View getView(int viewId){
+            View v = views.get(viewId);
+            if(v == null){
+                v = itemView.findViewById(viewId);
+                views.put(viewId, v);
+            }
+            return v;
+        }
+
+        public View getItemView(){
+            return itemView;
+        }
+    }
+
+    public interface CommonAdapterInterface{
+        public void handleItem(int id, CommonHolder holder, int position);
     }
 }

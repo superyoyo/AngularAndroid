@@ -4,15 +4,18 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.autonavi.jacklee.ngandroid.angular.adapter.CommonAdapter;
 import com.autonavi.jacklee.ngandroid.angular.bean.NgGo;
 import com.autonavi.jacklee.ngandroid.angular.bean.NgModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CommonAdapter.CommonAdapterInterface{
     private NgGo ngGo;
     private NgModel ngUser;
     private List<NgModel> list;
@@ -82,7 +85,30 @@ public class MainActivity extends AppCompatActivity {
 
         Message msg = Message.obtain();
         handler.sendMessageDelayed(msg, 1000);
+
+        CommonAdapter adapter = ngGo.getRecyclerAdapter(R.id.rv_list);
+        adapter.setCommonAdapterInterface(this);
     }
 
 
+    @Override
+    public void handleItem(int id, CommonAdapter.CommonHolder holder, final int position) {
+        switch (id){
+            case R.id.rv_list:
+                holder.getView(R.id.iv_head).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), position + "_head", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                holder.getItemView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), position + "_item", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
+        }
+    }
 }
