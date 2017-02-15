@@ -95,12 +95,14 @@ public class MainActivity extends AppCompatActivity implements CommonAdapter.Com
     public void handleItem(int id, CommonAdapter.CommonHolder holder, final int position) {
         switch (id){
             case R.id.rv_list:
-                holder.getView(R.id.iv_head).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(), position + "_head", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if(list.get(position).getTag().equals("student")){
+                    holder.getView(R.id.iv_head).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(), position + "_head", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
                 holder.getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
